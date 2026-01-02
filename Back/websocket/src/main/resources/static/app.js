@@ -1,8 +1,11 @@
+
+// 웹소켓 전용 스톰프 클라이언트
 const stompClient = new StompJs.Client({
-    brokerURL: 'ws://localhost:8080/helloworld'
+    brokerURL: 'ws://localhost:8080/endPointTest'
 });
+// 웹소켓 전용 팩토리에서 webSocket이 아닌 SockJS를 이용하는 스톰프
 stompClient.webSocketFactory = function () {
-    return new SockJS("http://localhost:8080/helloworld")
+    return new SockJS("http://localhost:8080/endPointTest")
   };
 
 stompClient.onConnect = (frame) => {
@@ -54,7 +57,11 @@ function disconnect() {
 
 function subscribe1() {
     setSubscribed1(true);
+
+    // index.html 에서 id가 subscribedDestination1인 값(val)을 조회
+    // subscribe 을 수행할 destination 을 조회한다.
     let destination = $("#subscribedDestination1").val()
+
     console.log('subscribe1. destination: ' + destination)
     stompClient.subscribe(destination, (response) => {
         console.log(destination + '-> here' + '. received response: ' + response.body)
@@ -83,10 +90,14 @@ function unsubscribe2() {
 }
 
 function sendMessage() {
+    // index.html 에서 id가 targetDestination 인 값(val)을 조회
     const targetDestination = $("#targetDestination").val();
+    // index.html 에서 message 조회
     const message = $("#message").val();
 
     console.log("send message. targetDestination: " + targetDestination + " ,message: " + message)
+
+    // 발행
     stompClient.publish({
         destination: targetDestination,
         body: JSON.stringify({'message': message})  // { "message": xxx }
@@ -97,10 +108,11 @@ function showMessage(message) {
     $("#messages").append("<tr><td>" + message + "</td></tr>");
 }
 
+// index.html의 버튼들에 대한 핸들러
 $(function () {
     $("form").on('submit', (e) => e.preventDefault());
-    $( "#connect" ).click(() => connect());
-    $( "#disconnect" ).click(() => disconnect());
+    $( "#connect" ).click(() => connect());         // connect 버튼을 누르면 connect 호출
+    $( "#disconnect" ).click(() => disconnect());   // disconnect 버튼을 누르면 disconnect 호출
 
     $( "#subscribe1" ).click(() => subscribe1());
     $( "#unsubscribe1" ).click(() => unsubscribe1());

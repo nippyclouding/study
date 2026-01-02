@@ -4,9 +4,9 @@
     <title>Hello WebSocket</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link href="/main.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script> <!-- 제이쿼리 라이브러리 -->
+    <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script> <!-- 스톰프 라이브러리 -->
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script> <!-- sockJS 라이브러리 -->
     <script src="/app.js"></script>
 </head>
 <body>
@@ -31,6 +31,8 @@
                     <label for="connect">subscribe destination 1:</label>
                     <div class="form-group">
                         <label for="subscribedDestination1">subscribe destination</label>
+
+                        <!-- input 의 입력값은 app.js 의 subscribe1 메서드에서 조회, 사용 -->
                         <input type="text" id="subscribedDestination1" class="form-control" placeholder="/topic/hello1">
                     </div>
                     <button id="subscribe1" class="btn btn-default" type="submit">subscribe</button>
@@ -57,6 +59,7 @@
             <form class="form-inline">
                 <div class="form-group">
                     <label for="targetDestination">target destination</label>
+                    <!-- input 의 입력값은 app.js 의 sendMessage 메서드에서 조회, 사용 -->
                     <input type="text" id="targetDestination" class="form-control" placeholder="/app/hello">
                 </div>
                 <div class="form-group">
