@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 
 import java.io.IOException;
 
-@ControllerAdvice
+@ControllerAdvice // @RestControllerAdvice 도 있다, 예외 처리를 위한 클래스
 @Slf4j
 public class StompExceptionHandler {
     private final SimpMessagingTemplate messagingTemplate;
@@ -18,6 +18,7 @@ public class StompExceptionHandler {
         this.messagingTemplate = messagingTemplate;
     }
 
+    // MVC 에서는 @ExceptionHandler 사용, 웹소켓에서는 @MessageExceptionHandler 사용
     @MessageExceptionHandler
     public void handleException(Exception exception) {
         log.error("exception: {}", exception.getClass());
@@ -31,7 +32,7 @@ public class StompExceptionHandler {
     }
 
     @MessageExceptionHandler
-    @SendTo("/topic/hello")
+    @SendTo("/topic/hello") // /topic/hello 를 구독한 모든 웹소켓 세션
     public String handleException(IOException exception, MessageHeaders headers) {
         log.error("exception: {}", exception.getClass());
         return "error!!";
