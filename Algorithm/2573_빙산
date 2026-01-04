@@ -1,0 +1,145 @@
+import java.util.*;
+import java.io.*;
+
+class Main {
+    static int[] dx = {1, 0, -1, 0};
+    static int[] dy = {0, 1, 0, -1};
+    static boolean[][] visited;
+    static int[][] board;
+    static int[][] afterBoard;
+    static int n;
+    static int m;
+    
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String[] firstInput = br.readLine().split(" ");
+        n = Integer.parseInt(firstInput[0]);
+        m = Integer.parseInt(firstInput[1]);
+        
+        board = new int[n][m];
+        afterBoard = new int[n][m];
+        visited = new boolean[n][m];
+        
+        for (int i = 0; i < n; i++) {
+            String input = br.readLine();
+            StringTokenizer st = new StringTokenizer(input, " ");
+            for (int j = 0; j < m; j++) {
+                board[i][j] = Integer.parseInt(st.nextToken());
+            }
+        }
+        
+        int output = func();
+        System.out.println(output);
+    }
+    
+    static int func() {
+        // BFS로 탐색을 하다 탐색의 시작점이 두 곳 이상이라면 그 때의 year을 리턴
+        int year = 0;
+        
+        Queue<Pair> q = new ArrayDeque<>();
+        
+        while (true) { 
+            
+            visited = new boolean[n][m];
+            int iterCnt = 0; // 탐색의 시작점 개수
+            
+            if (iterCnt >= 2) return year; // 종료 조건 1
+            if (isMelt()) return 0;        // 종료 조건 2
+            
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < m; j++) {
+                    if (board[i][j] != 0 && !visited[i][j]) {
+                        
+                        iterCnt++;
+                        if (iterCnt >= 2) return year;
+                        
+                        Pair startPair = new Pair(j, i);
+                        q.offer(startPair);
+                        visited[i][j] = true;
+                        
+                        // 탐색 시작
+                        while (!q.isEmpty()) {
+                            
+                            Pair poll = q.poll();
+                            int cx = poll.x;
+                            int cy = poll.y;
+                            
+                            for (int z = 0; z < 4; z++) {
+                                int nx = cx + dx[z];
+                                int ny = cy + dy[z];
+                                
+                                // 좌표 검증
+                                if (nx < 0 || ny < 0 || nx >= m || ny >= n) continue;
+                                if (visited[ny][nx] || board[ny][nx] == 0) continue;
+                                
+                                Pair newP = new Pair(nx, ny);
+                                q.offer(newP);
+                                visited[ny][nx] = true;
+                                
+                            }
+                            
+                        }
+                    }
+                }
+            }
+            year++;
+            updateBoard();
+            afterBoard = new int[n][m];
+        }
+        
+
+    }
+    
+   
+    
+    static void updateBoard() {
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (board[i][j] > 0) {
+                    int adjacentOcean = 0;
+                    for (int z = 0; z < 4; z++) {
+                        int nx = j + dx[z];
+                        int ny = i + dy[z];
+                        
+                        if (nx < 0 || ny < 0 || nx >= m || ny >= n) continue;
+                        if (board[ny][nx] != 0) continue;
+                        adjacentOcean++;
+                    }
+                    afterBoard[i][j] = adjacentOcean;
+                    
+                }
+            }
+        }
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (board[i][j] > 0) {
+                    board[i][j] -= afterBoard[i][j];
+                }
+                if (board[i][j] < 0) board[i][j] = 0;
+            }
+        }
+    }
+    
+    static boolean isMelt() {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (board[i][j] != 0) return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    static class Pair {
+        int x;
+        int y;
+        
+        
+        Pair(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+    }
+}
