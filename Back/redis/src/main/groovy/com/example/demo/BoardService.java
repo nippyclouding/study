@@ -16,11 +16,7 @@ import java.util.List;
 public class BoardService {
     private final BoardRepository boardRepository;
 
-    @Cacheable(
-            cacheNames = "getBoards",
-            key = "'boards:page:' + #p0 + ':size:' + #p1",
-            cacheManager = "boardCacheManager"
-    ) // Cache Aside 전략으로 캐싱이 적용
+    @Cacheable(cacheNames = "getBoards", key = "'boards:page:' + #p0 + ':size:' + #p1", cacheManager = "boardCacheManager") // Cache Aside 전략으로 캐싱이 적용
     @Transactional(readOnly = true)
     public List<Board> getBoards(int page, int size) {
         Pageable pageable = PageRequest.of(page - 1, size);
