@@ -41,6 +41,7 @@ let varD = function () {
 let var1 = () => {
     return 1;
 }
+
 var1(); // 1 리턴
 console.log(var1()); // 리턴된 1을 출력
 
