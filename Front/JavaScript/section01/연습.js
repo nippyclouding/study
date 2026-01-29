@@ -29,3 +29,39 @@ console.log(testVar5);
 
 let testVar6 = testVar5(3, 2);
 console.log(testVar6);
+
+
+// 콜백 : 함수를 호출할 때 파라미터로 다른 함수를 호출하는 경우
+function funcA () {
+    console.log("this is CallBack a");
+}
+function funcB(varation1) {
+    return varation1;
+}
+funcB(funcA());
+
+
+function repeatCallBack (cnt, funcTest) {
+    for (i = 0; i < cnt; i++) {
+        funcTest(i + 1);
+    }
+}
+
+
+repeatCallBack(7, function aaa(i) {
+    console.log(i);
+});
+
+repeatCallBack(8, function (i) {
+    if (i % 2 == 0) return;
+    else console.log(i);
+})
+
+repeatCallBack(9, (i) => {
+    if (i % 2 == 0) return;
+    else console.log(i);
+})
+
+repeatCallBack(10, (i) => {
+    console.log(i);
+})
