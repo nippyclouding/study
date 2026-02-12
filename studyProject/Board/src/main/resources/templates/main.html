@@ -1,0 +1,38 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<h1>게시판</h1> <br>
+
+    <div>
+        <table>
+            <thead>
+                <th>번호</th>
+                <th>제목</th>
+                <th>작성일</th>
+            </thead>
+
+            <tbody>
+                <tr th:each="board : ${boards}">
+                    <td th:text="${board.id}"></td>
+                    <td><a th:href="@{/{id}(id=${board.id})}" th:text="${board.title}"></a></td>
+                    <td th:text="${board.createdAt}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+        <a href="/create">
+            <button type="button">게시판 작성</button>
+        </a>
+    </div>
+
+</body>
+</html>
