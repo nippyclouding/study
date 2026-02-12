@@ -6,7 +6,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/")
@@ -21,6 +24,7 @@ public class BoardController {
         return "error"; // 전용 에러 페이지로 이동
     }
 
+    // =============================== READ ===============================
     @GetMapping // 페이징 x
     public String readAll(Model model) {
         List<Board> boards = boardService.readAll();
@@ -35,7 +39,9 @@ public class BoardController {
         model.addAttribute("board", readBoard);
         return "board_detail";
     }
+    // =============================== READ ===============================
 
+    // =============================== CREATE ===============================
     @GetMapping("/create")
     public String createBoard() {
         return "board_form";
@@ -53,6 +59,29 @@ public class BoardController {
 
         return "redirect:/" + createBoard.getId();
     }
+    // =============================== CREATE ===============================
+
+    // =============================== UPDATE ===============================
+    @PostMapping("/verify/{boardId}")
+    @ResponseBody
+    public Map<String, Object> verifyPassword(@PathVariable Long boardId, @RequestBody Map<String, String> payload) {
+        Board board = boardService.readDetail(boardId);
+        String inputPassword = payload.get("password");
+        boolean isMatch = board.getPassword().equals(inputPassword);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("match", isMatch);
+
+        return response;
+    }
+
+    @GetMapping("/update/{boardId}")
+    public String updateBoard(@PathVariable Long boardId, Model model) {
+        Board board = boardService.readDetail(boardId);
+        model.addAttribute("board", board);
+        return "board_modify";
+    }
+    // =============================== UPDATE ===============================
 
 
 }
