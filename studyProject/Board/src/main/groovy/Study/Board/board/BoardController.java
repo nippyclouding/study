@@ -1,16 +1,19 @@
 package Study.Board.board;
 
+import Study.Board.board.dtos.BoardUpdateDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
+@Slf4j
 @Controller
 @RequestMapping("/")
 @RequiredArgsConstructor
@@ -33,7 +36,7 @@ public class BoardController {
         return "main";
     }
 
-    @GetMapping("/{boardId}")
+    @GetMapping("/board/{boardId}")
     public String readDetail(@PathVariable Long boardId, Model model) {
         Board readBoard = boardService.readDetail(boardId);
         model.addAttribute("board", readBoard);
@@ -48,7 +51,7 @@ public class BoardController {
     }
 
     @PostMapping("/create")
-    public String createBoard(@ModelAttribute Board board, BindingResult bindingResult, Model model) {
+    public String createBoard(@Validated @ModelAttribute Board board, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
             return "board_form";
@@ -57,7 +60,7 @@ public class BoardController {
         Board createBoard = boardService.create(board);
         model.addAttribute("createBoard", createBoard);
 
-        return "redirect:/" + createBoard.getId();
+        return "redirect:/board/" + createBoard.getId();
     }
     // =============================== CREATE ===============================
 
@@ -79,7 +82,16 @@ public class BoardController {
     public String updateBoard(@PathVariable Long boardId, Model model) {
         Board board = boardService.readDetail(boardId);
         model.addAttribute("board", board);
-        return "board_modify";
+        return "board_update";
+    }
+
+    @PostMapping("/update/{boardId}")
+    public String updateBoard(@PathVariable Long boardId,
+                              @ModelAttribute BoardUpdateDto dto) {
+        // 변경 감지로 update
+        Board board = boardService.update(boardId, dto);
+
+        return "redirect:/board/" + boardId;
     }
     // =============================== UPDATE ===============================
 

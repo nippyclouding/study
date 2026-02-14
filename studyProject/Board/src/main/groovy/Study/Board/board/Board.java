@@ -36,10 +36,16 @@ public class Board {
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
 
-    public Board(String password, String content, String title) {
+    public Board(String password, String title, String content) {
         this.password = password;
-        this.content = content;
         this.title = title;
+        this.content = content;
         createdAt = LocalDateTime.now();
+    }
+
+    public void update(String title, String content) {
+        this.title = title;
+        this.content = content;
+        updatedAt = LocalDateTime.now();
     }
 }
