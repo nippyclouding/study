@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import shinhanproject.sh.ex2.domain.GuestBook;
 import shinhanproject.sh.ex2.dto.GuestBookDto;
+import shinhanproject.sh.ex2.dto.PageRequestDto;
+import shinhanproject.sh.ex2.dto.PageResultDto;
 import shinhanproject.sh.ex2.repository.GuestBookRepository;
 
 import java.util.Optional;
@@ -37,5 +39,18 @@ class GuestBookServiceImplTest {
 
         //then
         assertThat(guestBook.getId().equals(registeredId));
+    }
+
+    @Test
+    void getList() {
+        PageRequestDto pageRequestDto = PageRequestDto.builder()
+                .page(1)
+                .size(10)
+                .build();
+        PageResultDto<GuestBookDto, GuestBook> resultDto = guestBookService.getList(pageRequestDto);
+
+        for (GuestBookDto dto : resultDto.getDtos()) {
+            System.out.println(dto);
+        }
     }
 }

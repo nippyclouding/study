@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @Builder
 @Data
 public class GuestBookDto {
+    private Long id;
     private String title;
     private String content;
     private String writer;
