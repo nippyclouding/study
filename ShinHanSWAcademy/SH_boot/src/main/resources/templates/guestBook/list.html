@@ -17,21 +17,21 @@
                 <th scope="row">[[${dto.id}]]</th>
                 <td>[[${dto.title}]]</td>
                 <td>[[${dto.writer}]]</td>
-                <td>[[${#temporals.format(dto.regDate, 'yyyy/MM/dd')}]]</td>
+                <td>[[${#temporals.format(dto.registerDate, 'yyyy/MM/dd')}]]</td>
             </tr>
             </tbody>
         </table>
         <ul class="pagination h-100 justify-content-center align-items-center">
             <li class="page-item" th:if="${result.prev}">
-                <a class="page-link" th:href="@{/guestbook/list(page=${result.start - 1})}" tabindex="-1">Previous</a>
+                <a class="page-link" th:href="@{/guestBook/list(page=${result.start - 1})}" tabindex="-1">Previous</a>
             </li>
             <li th:class=" 'page-item '+${result.page == page ? 'active' : ''}" th:each="page:${result.pages}">
-                <a class="page-link" th:href="@{/guestbook/list(page=${page})}">
+                <a class="page-link" th:href="@{/guestBook/list(page=${page})}">
                     [[${page}]]
                 </a>
             </li>
             <li class="page-item" th:if="${result.next}">
-                <a class="page-link" th:href="@{/guestbook/list(page=${result.end+1})}">Next</a>
+                <a class="page-link" th:href="@{/guestBook/list(page=${result.end+1})}">Next</a>
             </li>
         </ul>
     </th:block>

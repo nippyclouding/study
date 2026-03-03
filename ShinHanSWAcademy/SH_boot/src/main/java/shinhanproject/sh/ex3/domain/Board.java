@@ -1,22 +1,22 @@
 package shinhanproject.sh.ex3.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
 @Builder
-@AllArgsConstructor
 @Getter
-@ToString
+@ToString(exclude = "writer")
+@AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "Boards")
 public class Board extends BaseEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bno;
     private String title;
     private String content;
 
-    private String replyer;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "writer_email")
+    private Member writer;
 }
