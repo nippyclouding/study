@@ -1,4 +1,4 @@
-package shinhanproject.sh.ex2.dto;
+package shinhanproject.sh.ex3.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

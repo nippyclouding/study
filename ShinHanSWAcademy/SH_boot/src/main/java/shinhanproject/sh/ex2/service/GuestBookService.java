@@ -24,7 +24,7 @@ public interface GuestBookService {
                 .content(book.getContent())
                 .title(book.getTitle())
                 .registerDate(book.getRegisterDate())
-                .modulateDate(book.getModDate())
+                .modifiedDate(book.getModDate())
                 .build();
     }
 }
