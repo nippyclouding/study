@@ -38,6 +38,42 @@
 
     <hr>
 
+    <div id="comment-section">
+        <h3>댓글</h3>
+        <div th:each="c : ${comments}" th:id="'comment-' + ${c.commentId}"
+             style="border:1px solid #ccc; margin:5px; padding:5px">
+
+            <span th:id="'comment-text-' + ${c.commentId}"
+                  th:text="${c.comment}"></span>
+            <input type="text" th:id="'comment-edit-' + ${c.commentId}"
+                   th:value="${c.comment}" style="display:none;">
+
+            <br>
+
+            <input type="password" th:id="'comment-pw-' + ${c.commentId}"
+                   placeholder="비밀번호 입력">
+
+            <button type="button"
+                    th:data-id="${c.commentId}"
+                    onclick="verifyCommentPassword(this, 'update')">수정</button>
+
+            <button type="button" th:id="'confirm-edit-' + ${c.commentId}"
+                    th:data-id="${c.commentId}"
+                    onclick="submitCommentUpdate(this)"
+                    style="display:none;">수정 완료</button>
+        </div>
+    </div>
+    <hr>
+
+    <div>
+        <h3>댓글 작성</h3>
+        <textarea id="new-comment" placeholder="댓글을 입력하세요" rows="3" cols="40"></textarea><br>
+        <input type="password" id="new-comment-pw" placeholder="비밀번호 입력"><br>
+        <button type="button"
+                th:data-id="${board.boardId}"
+                onclick="saveComment(this)">댓글 등록</button>
+    </div>
+
     <div>
         <a href="/">메인 페이지</a>
     </div>
