@@ -47,4 +47,19 @@ class MemberRepositoryTest {
         Assertions.assertThat(page.isFirst()).isTrue(); // 첫 페이지인지 확인
         Assertions.assertThat(page.hasNext()); //다음 페이지 존재 여부 (현재 1페이지, 다음 2페이지)
     }
+
+    @Test
+    void bulkUpdate() throws Exception {
+        memberRepository.save(new Member(10, "member1"));
+        memberRepository.save(new Member(19, "member2"));
+        memberRepository.save(new Member(20, "member3"));
+        memberRepository.save(new Member(21, "member4"));
+        memberRepository.save(new Member(40, "member5"));
+
+        int resultCount = memberRepository.bulkAgePlus(20);
+        // update 전 쓰기지연 저장소의 insert 쿼리들을 flush (jpa 기본 특징)
+        // @Modifying(clearAutomatically = true) : update 이후 영속성 컨텍스트 초기화
+
+        Assertions.assertThat(resultCount).isEqualTo(3);
+    }
 }
