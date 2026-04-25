@@ -24,10 +24,11 @@ public class Member {
     }
 
     public Member(int age, String username) {
-        this(age, username, 0);
+        this.age = age;
+        this.username = username;
     }
 
-    public Member(int age, String username, int i) {
+    public Member(int age, String username, Team team) {
         this.username = username;
         this.age = age;
         if (team != null) changeTeam(team);
@@ -36,5 +37,14 @@ public class Member {
     public void changeTeam(Team team) {
         this.team = team;
         team.getMembers().add(this);
+    }
+
+    static class MemberDto {
+        private Long id;
+        private String username;
+        public MemberDto(Member member) {
+            this.id = member.getId();
+            this.username = member.getUsername();
+        }
     }
 }
