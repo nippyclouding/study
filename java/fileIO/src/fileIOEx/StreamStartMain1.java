@@ -34,6 +34,8 @@ public class StreamStartMain1 {
         GC는 자바 객체 자체는 소멸시킬 수 있지만 OS가 빌려준 파일 핸들까지 자동으로 반납해 주지는 못한다.
 
         OS 자원을 반납하지 않을 경우 OS 파일 시스템 자원이 가득 차서 새로운 파일을 열 수 없게 될 수도 있다.
+        ex : 식별 번호(File Descriptor) 를 사용 가능한 객체는 한정적인데, close로 자원을 반납하지 않으면 새로운 파일 입출력 객체를 생성하지 못할 수도 있다.
+        정확히는 객체는 생성 가능하지만 파일을 읽어오려는 순간 IOException (Too many open files) 발생
         FileOutputStream 경우 버퍼에 남아있던 데이터가 출력되지 않거나 다른 프로세스가 해당 파일을 수정, 삭제하지 못하도록 락을 걸 수 있어 문제
          */
         fos.close();
