@@ -7,6 +7,7 @@ import java.io.IOException;
 import static buffered.BufferedConst.FILE_NAME;
 import static buffered.BufferedConst.FILE_SIZE;
 
+// V1 : 버퍼 없이 직접 파일 크기만큼 1byte싹 반복해서 읽고 쓰기
 public class CreateAndReadFileV1 {
     public static void main(String[] args) {
         FileOutputStream fos = null;
