@@ -14,7 +14,7 @@ public class ReaderWriterMainV2 {
         OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8); // 보조 스트림
         InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8); // 보조 스트림
 
-        osw.write(s);
+        osw.write(s); // byte 배열을 파라미터로 넣지 않고 String 을 넣는다.
         // osw.flush();
         osw.close();
 
