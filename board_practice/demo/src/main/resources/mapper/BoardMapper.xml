@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.board.board.BoardMapper">
+
+    <select id="findMainBoardsByPaging"
+            resultType="com.example.board.board.domain.Board">
+        SELECT
+            BOARD_TITLE
+            , BOARD_WRITER_NAME
+            , CREATED_AT
+        FROM BOARDS
+        WHERE DELETED_AT IS NULL
+        ORDER BY CREATED_AT DESC
+        LIMIT #{pagingCount}
+        OFFSET #{offset}
+    </select>
+
+    <select id="findAllCount"
+            resultType="int">
+        SELECT COUNT(*)
+        FROM BOARDS
+        WHERE DELETED_AT IS NULL
+    </select>
+
+    <resultMap id="boardWithCommentsResultMap"
+               type="com.example.board.board.domain.Board">
+
+        <id property="boardId" column="b_board_id"/>
+
+        <result property="title" column="b_title"/>
+        <result property="writerName" column="b_writer_name"/>
+        <result property="content" column="b_content"/>
+        <result property="createdAt" column="b_created_at"/>
+        <result property="deletedAt" column="b_deleted_at"/>
+
+        <collection property="comments"
+                    ofType="com.example.board.comment.domain.Comment">
+
+            <id property="commentId" column="c_comment_id"/>
+
+            <result property="boardId" column="c_board_id"/>
+            <result property="writerName" column="c_writer_name"/>
+            <result property="content" column="c_content"/>
+            <result property="createdAt" column="c_created_at"/>
+            <result property="deletedAt" column="c_deleted_at"/>
+        </collection>
+    </resultMap>
+
+
+    <select id="findBoardByIdWithComments"
+            resultMap="boardWithCommentsResultMap"> <!-- ResultMap Not ResultType -->
+        SELECT
+        b.BOARD_ID          AS b_board_id,
+        b.BOARD_TITLE       AS b_title,
+        b.BOARD_WRITER_NAME AS b_writer_name,
+        b.BOARD_CONTENT     AS b_content,
+        b.CREATED_AT        AS b_created_at,
+        b.DELETED_AT        AS b_deleted_at,
+
+        c.COMMENT_ID          AS c_comment_id,
+        c.BOARD_ID            AS c_board_id,
+        c.COMMENT_WRITER_NAME AS c_writer_name,
+        c.COMMENT_CONTENT     AS c_content,
+        c.CREATED_AT          AS c_created_at,
+        c.DELETED_AT          AS c_deleted_at
+
+        FROM BOARDS b
+
+        LEFT JOIN COMMENTS c
+
+        ON b.BOARD_ID = c.BOARD_ID
+        AND c.DELETED_AT IS NULL
+
+        WHERE b.BOARD_ID = #{boardId}
+            AND b.DELETED_AT IS NULL
+    </select>
+
+
+
+    <select id="findBoardById"
+            resultType="com.example.board.board.domain.Board">
+        SELECT BOARD_PASSWORD AS password
+        FROM BOARDS
+        WHERE BOARD_ID = #{boardId}
+        AND DELETED_AT IS NULL
+    </select>
+    
+    <insert id="insertBoard">
+        INSERT INTO BOARDS (
+            BOARD_TITLE,
+            BOARD_WRITER_NAME,
+            BOARD_CONTENT,
+            BOARD_PASSWORD,
+            CREATED_AT,
+            DELETED_AT
+        )
+        VALUES (
+            #{board.title},
+            #{board.writerName},
+            #{board.content},
+            #{board.password},
+            sysdate,
+            NULL
+        )
+    </insert>
+
+    <update id="updateBoard">
+        UPDATE BOARDS SET
+            BOARD_TITLE = #{board.title},
+            BOARD_WRITER_NAME = #{board.writerName},
+            BOARD_CONTENT = #{board.content},
+            BOARD_PASSWORD = #{board.password}
+        WHERE BOARD_ID = #{boardId}
+        AND DELETED_AT IS NULL
+    </update>
+
+    <update id="deleteBoardByBoardId">
+        UPDATE BOARDS SET
+        DELETED_AT = sysdate
+        WHERE BOARD_ID = #{boardId}
+        AND DELETED_AT IS NULL
+    </update>
+
+</mapper>
