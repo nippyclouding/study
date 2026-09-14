@@ -23,6 +23,11 @@ public class BoardDetailController {
     @GetMapping("/{boardId}")
     public ResponseEntity<?> getDetailBoard(@PathVariable Long boardId) {
         Board board = boardService.getBoardDetail(boardId);
+
+        if (board == null) {
+            return ResponseEntity.ok(404);
+        }
+
         return ResponseEntity.ok(board);
     }
 
@@ -34,8 +39,8 @@ public class BoardDetailController {
     }
 
     @PostMapping("/{boardId}/edit")
-    public ResponseEntity<?> editBoard(@PathVariable Long boardId, @RequestParam String password, @Validated @ModelAttribute BoardRequestDto dto) {
-        if (boardService.updateBoard(boardId, dto, password)) {
+    public ResponseEntity<?> editBoard(@PathVariable Long boardId, @RequestParam String rawPassword, @Validated @ModelAttribute BoardRequestDto dto) {
+        if (boardService.updateBoard(boardId, dto, rawPassword)) {
             return ResponseEntity.ok().build();
         } else return ResponseEntity.status(500).build();
     }

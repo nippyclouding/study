@@ -5,10 +5,20 @@
 
 <mapper namespace="com.example.board.board.BoardMapper">
 
+
+    <resultMap id="mainBoardResultMap"
+               type="com.example.board.board.domain.Board">
+        <id property="boardId" column="BOARD_ID"/>
+        <result property="title" column="BOARD_TITLE"/>
+        <result property="writerName" column="BOARD_WRITER_NAME"/>
+        <result property="createdAt" column="CREATED_AT"/>
+    </resultMap>
+
     <select id="findMainBoardsByPaging"
-            resultType="com.example.board.board.domain.Board">
+            resultMap="mainBoardResultMap">
         SELECT
-            BOARD_TITLE
+            BOARD_ID
+            , BOARD_TITLE
             , BOARD_WRITER_NAME
             , CREATED_AT
         FROM BOARDS
