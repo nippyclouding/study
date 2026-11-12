@@ -1,1 +1,38 @@
+# macOS metadata
 .DS_Store
+._*
+.AppleDouble/
+.LSOverride
+
+# Java compiled artifacts (keep build tool wrappers)
+*.class
+*.jar
+*.war
+*.ear
+!**/gradle/wrapper/gradle-wrapper.jar
+!**/.mvn/wrapper/maven-wrapper.jar
+
+# Gradle / Maven / IDE build output at any project depth
+.gradle/
+build/
+target/
+out/
+bin/
+.apt_generated/
+.apt_generated_tests/
+**/src/main/generated/
+**/src/test/generated/
+
+# Frontend dependencies and build output
+node_modules/
+dist/
+coverage/
+.next/
+.nuxt/
+.output/
+.vite/
+
+# Editor temporary files
+*.swp
+*.swo
+*~
