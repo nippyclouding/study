@@ -37,6 +37,13 @@ coverage/
 *.swo
 *~
 
+# Root VS Code settings
+/.vscode/
+
+# Local Python virtual environments
+.venv/
+.venu/
+
 # Local agent configuration
 .agent
 
