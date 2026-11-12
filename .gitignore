@@ -36,3 +36,6 @@ coverage/
 *.swp
 *.swo
 *~
+
+# Local agent configuration
+.agent
