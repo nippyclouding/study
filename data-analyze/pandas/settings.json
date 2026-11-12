@@ -1,0 +1,27 @@
+{
+  "editor.quickSuggestions": {
+    "other": "off",
+    "comments": "off",
+    "strings": "off"
+  },
+  "github.copilot.enable": {
+    "*": false
+  },
+  "[python]": {
+  "editor.quickSuggestions": {
+    "other": "off",
+    "comments": "off",
+    "strings": "off"
+  },
+  "editor.suggestOnTriggerCharacters": false,
+  "editor.inlineSuggest.enabled": false,
+  "editor.tabCompletion": "off",
+  "editor.parameterHints.enabled": false,
+  "editor.hover.enabled": "off"
+},
+  "chat.disableAIFeatures": true,
+  "github.copilot.nextEditSuggestions.enabled": false,
+  "editor.suggestOnTriggerCharacters": false,
+  "editor.inlineSuggest.enabled": false,
+  "editor.tabCompletion": "off"
+}

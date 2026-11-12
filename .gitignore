@@ -39,3 +39,6 @@ coverage/
 
 # Local agent configuration
 .agent
+
+# Local pandas datasets
+/data-analyze/pandas/datas/
