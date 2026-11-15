@@ -57,18 +57,18 @@ submit_x = concat_x[given_x.shape[0]:]
 # 3. 훈련/학습 데이터 분리
 from sklearn.model_selection import train_test_split
 
-x_train, x_val, y_train, y_val = train_test_split(given_x, given_y, test_size=0.2) # test_size =0.2가 잘 외워지지 않는다. 암기하기
+x_train, x_val, y_train, y_val = train_test_split(given_x, given_y, test_size=0.2, random_state = 42) # test_size =0.2가 잘 외워지지 않는다. 암기하기
 
 
 # 4. 학습
 from sklearn.ensemble import RandomForestRegressor
 
-model = RandomForestRegressor()
+model = RandomForestRegressor(random_state = 42)
 
-model.fit(x_train, y_train, random_state = 42)
+model.fit(x_train, y_train)
 
 # 5. 검증
-y_predict = model.predict(x_val, random_state = 42)
+y_predict = model.predict(x_val)
 
 from sklearn.metrics import r2_score, mean_squared_error, root_mean_squared_error
 r2 = r2_score(y_val, y_predict)
