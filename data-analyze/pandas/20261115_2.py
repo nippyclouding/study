@@ -34,3 +34,4 @@ drop_columns = null_ratio[null_ratio > 0.8].index
 
 # 해당 컬럼 삭제
 df = df.drop(drop_columns, axis=1)
+df = df.drop(columns = drop_columns) # axis = 1, columns = .. 방식 모두 동일
