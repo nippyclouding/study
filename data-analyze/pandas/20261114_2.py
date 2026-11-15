@@ -6,8 +6,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, LabelEncoder
 from sklearn.ensemble import RandomForestRegressor
 
-def print_space() : 
-    print("-" * 50)
+
 
 
 path1 = pd.read_csv('./datas/2.csv파일/2유형/회귀/집값예측/house_price_train.csv')
