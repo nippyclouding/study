@@ -88,6 +88,7 @@ print(r2, mse, rmse)
 
 # 6. 제출
 
+# 제출 전 다시 학습시키기, 학습 데이터가 많을 수록 성능이 뛰어나기 때문에 훈련/학습 데이터를 합쳐 재학습
 model = RandomForestRegressor()
 model.fit(x, y)
 

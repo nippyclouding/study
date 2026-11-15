@@ -65,10 +65,10 @@ from sklearn.ensemble import RandomForestRegressor
 
 model = RandomForestRegressor()
 
-model.fit(x_train, y_train)
+model.fit(x_train, y_train, random_state = 42)
 
 # 5. 검증
-y_predict = model.predict(x_val)
+y_predict = model.predict(x_val, random_state = 42)
 
 from sklearn.metrics import r2_score, mean_squared_error, root_mean_squared_error
 r2 = r2_score(y_val, y_predict)
@@ -81,6 +81,9 @@ print("rmse : ", rmse)
 
 
 # 6. 제출
+model = RandomForestRegressor()
+model.fit(given_x, given_y)
+
 submit_y = model.predict(submit_x)
 print(submit_y.shape)
 df = pd.DataFrame(submit_y, columns=['pred'])

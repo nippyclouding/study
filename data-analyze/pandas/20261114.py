@@ -111,6 +111,7 @@ print("r2_score", r2_score)
 
 # 6. 제출
 
+
 y_submit = model.predict(submit)
 print(y_submit.shape)
 result = pd.DataFrame(y_submit, columns = ['pred'])
