@@ -21,6 +21,7 @@ kurt = df['SalePrice'].kurt()
 # log1p 변환 : np.log1p()
 log1p = np.log1p(df['SalePrice'])
 
+# log1p 스케일링 후 왜도, 첨도
 log1p_skew = log1p.skew()
 log1p_kurt = log1p.kurt()
 
