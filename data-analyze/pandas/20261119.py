@@ -53,7 +53,7 @@ from sklearn.model_selection import train_test_split
 
 x_train, x_val, y_train, y_val = train_test_split(given_x, given_y, test_size=0.2, stratify=given_y, random_state = 42)
 
-print(x_train.shape, x_val.shape, y_train.shape, y_train.shape)
+print(x_train.shape, x_val.shape, y_train.shape, y_val.shape)
 
 # 4. training
 from sklearn.ensemble import RandomForestClassifier
@@ -82,6 +82,14 @@ print(roc, f1, accuracy, precision)
 model = RandomForestClassifier(random_state = 42)
 model.fit(given_x, given_y)
 
-submit_y = model.predict(concat_x)
+submit_y = model.predict(submit_x)
+# model.predict(concat_x) : 결과 요구 사항 1000 행, concat_x로 예측 시 3000 행 반환
+# model.predict(submit) : 전처리 이전의 submit으로 예측 시 모델을 잘못 사용하게 된다. 전처리가 된 submit_x 사용
+
 df = pd.DataFrame(submit_y, columns = ['pred'])
+
+print(df.shape)
+print(df.head())
+print(df['pred'].value_counts())
+
 df.to_csv('20261119.csv', index=False)
