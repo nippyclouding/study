@@ -21,6 +21,7 @@ print(submit_x.info())
 
 # Preprocessing : fillna -> preprocessing
 given_x = given.drop('SalePrice', axis = 1)
+given_x = given.drop('Id', axis = 1)
 given_y = given['SalePrice']
 
 concat_x = pd.concat([given_x, submit_x])
@@ -33,6 +34,7 @@ print(concat_x.isnull().sum())
 
 print("Labeling columns : Neighborhood, KitchenQual")
 
+# sklearn.encoder 가 아니라 sklearn.preprocessing
 from sklearn.preprocessing import LabelEncoder
 encoder = LabelEncoder()
 
