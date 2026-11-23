@@ -7,7 +7,7 @@ import pandas as pd
 import numpy as np
 
 print("=" * 50)
-# 1-1
+# 1-2
 df = pd.read_csv(path2)
 
 print(df.shape)
