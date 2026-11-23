@@ -158,7 +158,7 @@ print(model.summary())
 print(round(0.0347, 3)) # 답 : 0.035
 
 # 3-1-2
-print(round(np.exp(0.0055 * 1), 3))  # 답 : 1.006
+print(round(np.exp(model.params['Age'] * 1), 3))  # 답 : 1.006
 
 
 new_data = pd.DataFrame({
@@ -178,7 +178,7 @@ import statsmodels.formula.api as smf
 
 model = smf.ols('Price ~ Area + Stories + Wall', data = df).fit()
 print(model.summary())
-print(round(model.params.sum(), 3)) # 3-2-1 답 : 201.912
+print(round(model.params.drop('Intercept').sum(), 3)) # 3-2-1 답 : 201.912
 
 # 유의하지 않은 변수 : P>|t|값이 0.005보다 큰 컬럼 = Wall
 
