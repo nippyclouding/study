@@ -140,39 +140,9 @@ print(round(np.exp(model.params['Diabetes_History[T.Pre]'] * 1), 3))
 # 답 : 2.011
 
 # 3 - 2
-predict_series = model.predict(df)
-predict_series.sort_values(ascending=False, inplace=True) # id가 작은 환자로 정렬 방법 ?  
-print(predict_series)
+df['prob'] = model.predict(df)
+print(df['prob'].head())
 
-print(df['Glucose'].head())
-print(df['Glucose'].iloc[154])
-# 답 : 152 맞춰도 운이 좀 있다
+df.sort_values(['prob', 'ID'], ascending=[False, True], inplace=True)
 
-
-# 3 - 3
-# 방법을 모르겠다
-
-
-
-# 3 - 4
-df = pd.read_csv(path7)
-from scipy import stats
-
-# t 검정 : 단일, 독립, 대응
-# greater, two-sides
-
-# 귀무 : Page_Time 평균이 300초와 같다
-
-p_value = stats.ttest_1samp(df['Page_Time'], 300)[1]
-a = 0.005
-print(round(p_value, 3)) # 3 - 4 답 : 0.332
-
-
-# 3 -5 
-
-# 3 - 6
-model = smf.ols('Sales ~ Visit_Count + Page_Time + Click_Count + Ad_Spend + Conversion_Count', data = df).fit()
-
-print(model.summary())
-print(model.pvalues.sort_values()) # 오름차, pvalue가 가장 작은 데이터가 가장 유의하다. Conversion_Count
-print(round(model.params['Conversion_Count'], 3)) # 답 : 1524.42
+print(df.head())
