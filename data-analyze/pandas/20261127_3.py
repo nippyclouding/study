@@ -144,7 +144,9 @@ pvalue =stats.ttest_1samp(df['Final'], 70)[1]
 print(round(pvalue, 3))
 
 
-pvalue =stats.ttest_rel(df['Midterm'], df['Final'])[1]
+# 귀무가설 : 기말고사 점수가 중간고사 점수보다 증가 x
+# 대립가설 : 기말고사 점수가 중간고사 점수보다 증가 o
+pvalue =stats.ttest_rel(df['Midterm'], df['Final'], alternative='less')[1]
 # 3-1-2
 print(round(pvalue, 3))
 
@@ -174,10 +176,14 @@ data = pd.DataFrame({
 print(round(model.predict(data), 3)) # 0.691
 
 
+
 condition = df_droped['Passed'] > 0.5
 
 from sklearn.metrics import accuracy_score
-# 3번은 모르겠다
-#accuracy = accuracy_score(condition, model.predict(df_droped))
-#print(round(accuracy), 3)
+
+pred = model.predict(df_droped)
+print(pred)
+pred_datas = pred >= 0.5
+accuracy = accuracy_score(df['Passed'], pred_datas)
+print(round(accuracy, 3))
 
