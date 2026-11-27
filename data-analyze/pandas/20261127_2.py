@@ -11,15 +11,33 @@ path7 = '/Users/nippyclouding/Desktop/빅데이터분서
 import pandas as pd
 import numpy as np
 
-df = pd.read_csv(path1)
+df = pd.read_csv(path2)
 
 print(df.shape)
 print(df.head())
 print(df.isnull().sum())
 print(df.info())
 
-grouped_series = df.groupby('Subtopic')['Answer'].sum() / df.groupby('Subtopic')['Answer'].count()
+df['year'] = df['order_date'].str[:4]
+df['month'] = df['order_date'].str[5:7]
+print(df['year'].head(), df['month'].head())
+
+grouped_list = ['year', 'month']
+
+grouped_series = df.groupby(grouped_list)['price'].sum()
+
 print(grouped_series.head())
-print(grouped_series.info())
 grouped_series.sort_values(ascending=False, inplace=True)
-print(round(grouped_series.iloc[2], 3))
+
+print(grouped_series.iloc[1])
+
+# 매출기준네번째로높은연도/월을찾고해당연도/월의카테고리별 총매출액을집계한뒤, 그중가장높은총매출액을구한다.
+
+print(grouped_series.index[3], grouped_series.iloc[3])
+
+grouped_list = ['year', 'month', 'category']
+grouped_list = df.groupby(grouped_list)['price'].max()
+
+
+print(grouped_list.shape)
+print(grouped_list)
